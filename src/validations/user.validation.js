@@ -10,6 +10,17 @@ const createUser = {
   }),
 };
 
+
+const createprofileUser = {
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+     password: Joi.string().required().custom(password),
+     name: Joi.string().required(),
+     role: Joi.string().required().valid('user', 'admin'),
+    
+  }),
+};
+
 const getUsers = {
   query: Joi.object().keys({
     name: Joi.string(),
@@ -35,6 +46,8 @@ const updateUser = {
       email: Joi.string().email(),
       password: Joi.string().custom(password),
       name: Joi.string(),
+      profile: Joi.string()
+        // imgCollection: Joi.array().required()
     })
     .min(1),
 };
@@ -51,4 +64,5 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  createprofileUser
 };

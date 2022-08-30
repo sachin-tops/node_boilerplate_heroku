@@ -13,8 +13,9 @@ const { authLimiter } = require('./middlewares/rateLimiter');
 const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
-
 const app = express();
+const apis = require('./routes/v1/profile.route');
+
 
 if (config.env !== 'test') {
   app.use(morgan.successHandler);
@@ -52,7 +53,9 @@ if (config.env === 'production') {
 
 // v1 api routes
 app.use('/v1', routes);
-
+app.use('/api', apis);
+app.use('/public', express.static('public'));
+// app.use('/api', apis);
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
@@ -63,5 +66,7 @@ app.use(errorConverter);
 
 // handle error
 app.use(errorHandler);
+
+
 
 module.exports = app;

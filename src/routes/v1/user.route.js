@@ -3,12 +3,13 @@ const auth = require('../../middlewares/auth');
 const validate = require('../../middlewares/validate');
 const userValidation = require('../../validations/user.validation');
 const userController = require('../../controllers/user.controller');
-
+// const upload = require('./profile.route');
 const router = express.Router();
 
 router
   .route('/')
   .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
+  // .post(auth('manageUsers'), validate(userValidation.profileUser), userController.profileUser)
   .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers);
 
 router
@@ -17,6 +18,9 @@ router
   .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
   .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
 
+  // router.post('/upload-images', upload.array('imgCollection', 6), validate(userValidation.profileUser),(userController.profileUser))
+  //  router.route('/:userId')
+  //  .post(auth('/upload-images'), upload.array('imgCollection', 6), (userController.profileUser))
 module.exports = router;
 
 /**

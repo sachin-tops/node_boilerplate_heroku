@@ -5,9 +5,17 @@ const catchAsync = require('../utils/catchAsync');
 const { userService } = require('../services');
 
 const createUser = catchAsync(async (req, res) => {
+  console.log(req.body)
   const user = await userService.createUser(req.body);
   res.status(httpStatus.CREATED).send(user);
 });
+
+// const createprofileUser = catchAsync(async (req, res) => {
+//   console.log(req.body)
+//   const user = await userService.createprofileUser(req.body);
+//   console.log(user)
+//   res.status(httpStatus.CREATED).send(user);
+// });
 
 const getUsers = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name', 'role']);
@@ -40,4 +48,5 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+ 
 };
